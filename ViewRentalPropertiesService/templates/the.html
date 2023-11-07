@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!DOCTYPE html>
+<html>
+<head>
+	<title>Thanh toán</title>
+	<style>
+		/* CSS để thiết lập giao diện trang web */
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: Arial, sans-serif;
+		}
+		header {
+			background-color: #333;
+			color: #fff;
+			padding: 10px;
+			text-align: center;
+		}
+		nav {
+			background-color: #ccc;
+			padding: 10px;
+			text-align: center;
+		}
+		nav a {
+			display: inline-block;
+			padding: 5px 10px;
+			color: #333;
+			text-decoration: none;
+			margin-right: 10px;
+		}
+		nav a:hover {
+			background-color: #333;
+			color: #fff;
+		}
+		footer {
+			background-color: #333;
+			color: #fff;
+			padding: 10px;
+			text-align: center;
+		}
+        .btn-pay {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+          }
+          
+          .btn-pay:hover {
+            background-color: #0062cc;
+            color: #fff;
+          }
+          
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Thuê nhà,phòng,căn hộ TaT</h1>
+		<p>Tìm kiếm phòng trọ, căn hộ và nhà cho thuê</p>
+	</header>
+	<nav>
+		<a href="/">Trang chủ</a>
+		<a href="/Search">Tìm kiếm</a>
+		<a href="/post">Đăng tin cho thuê</a>
+        <a href="/listpost">Bài đăng</a>
+		<a href="/favorite">Yêu thích</a>
+        {% if username %}
+        <a href="/account">Xin chào ! {{username}} TKC:{{money}} vnd</a>
+		<a href="/recharge">Nạp tiền</a>
+        <a href="/logout">Đăng xuất</a>
+        <a href="/showpayment">Lịch sử nạp tiền</a>
+        <a href="/showtransaction">Lịch sử giao dịch</a>
+        {%else %}
+        <a href="/login">Đăng nhập</a>
+        {% endif %}
+        <div>
+            {%if method=='Thẻ'%}
+            <img src="{{ url_for('static', filename='images/the.jpg') }}" alt="My Image" style="width: 500px; height: 500px;">
+
+            {%else %}
+            <img src="{{ url_for('static', filename='images/momo.jpg') }}" alt="My Image" style="width: 500px; height: 500px;">
+
+            {%endif%}
+            <h2>Chuyển khoản với nội dung username(số tiền)TT vd: zezekura(15000)TT</h2>
+            <br>
+            <br>
+            <a href="/showpayment" class="btn-pay">Xác nhận đã thanh toán</a>
+
+        </div>
+        
+	</nav>
+</body>
+<footer>
+    <p>Thuê nhà,phòng,căn hộ TaT - Tìm kiếm phòng trọ căn hộ và nhà cho thuê</p>
+</footer>
+
+</body>
+</html> 

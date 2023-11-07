@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Đăng tin</title>
+        <style>
+            /* CSS để thiết lập giao diện trang web */
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+            }
+            header {
+                background-color: #333;
+                color: #fff;
+                padding: 10px;
+                text-align: center;
+            }
+            nav {
+                background-color: #ccc;
+                padding: 10px;
+                text-align: center;
+            }
+            nav a {
+                display: inline-block;
+                padding: 5px 10px;
+                color: #333;
+                text-decoration: none;
+                margin-right: 10px;
+            }
+            nav a:hover {
+                background-color: #333;
+                color: #fff;
+            }
+            section {
+                padding: 20px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: flex-start;
+            }
+            section .card {
+                width: 300px;
+                margin: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                padding: 10px;
+                text-align: center;
+            }
+            section .card img {
+                max-width: 100%;
+                height: auto;
+            }
+            section .card h2 {
+                margin-top: 0;
+                font-size: 24px;
+                color: #333;
+            }
+            section .card p {
+                margin-bottom: 0;
+                font-size: 16px;
+                color: #666;
+            }
+            footer {
+                background-color: #333;
+                color: #fff;
+                padding: 10px;
+                text-align: center;
+            }
+            form {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              }
+          
+              label {
+                font-weight: bold;
+                margin-top: 20px;
+              }
+          
+              input[type="text"],
+              select,
+              textarea {
+                font-size: 20px;
+                padding: 10px;
+                margin-top: 10px;
+                border-radius: 5px;
+                border: 1px solid gray;
+                width: 90%;
+              }
+          
+              input[type="file"] {
+                margin-top: 10px;
+              }
+          
+              input[type="submit"] {
+                background-color: #4CAF50;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+              }
+          
+              input[type="submit"]:hover {
+                background-color: #45a049;
+              }
+        </style>
+    </head>
+	<header>
+		<h1>Thuê nhà,phòng,căn hộ TaT</h1>
+		<p>Tìm kiếm phòng trọ, căn hộ và nhà cho thuê</p>
+	</header>
+	<nav>
+		<a href="/">Trang chủ</a>
+		<a href="/Search">Tìm kiếm</a>
+		<a href="/post">Đăng tin cho thuê</a>
+    <a href="/listpost">Bài đăng</a>
+    <a href="/favorite">Yêu thích</a>
+        {% if username %}
+        <a href="/account">Xin chào ! {{username}} TKC:{{money}} vnd</a>
+		<a href="/recharge">Nạp tiền</a>
+        <a href="/logout">Đăng xuất</a>
+        <a href="/showpayment">Lịch sử nạp tiền</a>
+        <a href="/showtransaction">Lịch sử giao dịch</a>
+        {%else %}
+        <a href="/login">Đăng nhập</a>
+        {% endif %}
+        
+	</nav>
+  <body>
+    <h1>Đăng tin mới</h1>
+    {% if message %}
+    <h2>{{message}}</2>
+    {%endif%}
+    <form id="myForm" method="post" enctype="multipart/form-data">
+      <label for="title">Tiêu đề:</label>
+      <input type="text" id="title" name="title" required><br>
+
+      <label for="location">Địa chỉ:</label>
+      <input type="text" id="location" name="address" required><br>
+      <label for="location">Quận</label>
+      <select id="location" name="location">
+          <option value="1" >QUận 1</option>
+          <option value="3" >QUận 3</option>
+          <option value="4" >QUận 4</option>
+          <option value="5" >QUận 5</option>
+          <option value="6" >QUận 6</option>
+          <option value="7" >QUận 7</option>
+          <option value="8" >QUận 8</option>
+          <option value="10" >QUận 10</option>
+          <option value="11" >QUận 11</option>
+          <option value="12" >QUận 12</option>
+          <option value="Bình Tân" >QUận Bình Tân</option>
+          <option value="Bình Thạnh" >QUận Bình Thạnh</option>
+          <option value="Gò Vấp" >QUận Gò Vấp</option>
+          <option value="Phú Nhuận" >QUận Phú Nhuận</option>
+          <option value="Tân Bình" >QUận Tân Bình</option>
+          <option value="Tân Phú" >QUận Tân Phú</option>
+          <option value="Thủ Đức" >QUận Thủ Đức</option>
+      </select>
+      <label for="location">Diện tích:</label>
+      <input type="number" id="location" name="area" required><br>
+
+      <label for="price">Giá tiền:</label>
+      <input type="number" id="price" name="price" required><br>
+
+      <label for="description">Mô tả:</label>
+      <textarea id="description" name="description"required></textarea><br>
+
+      <label for="image">Ảnh 1:</label>
+      <input type="file" id="image" name="image1" required><br>
+      <label for="image">Ảnh 2:</label>
+      <input type="file" id="image" name="image2" required><br>
+      <label for="image">Ảnh3:</label>
+      <input type="file" id="image" name="image3"required><br>
+      <label for="type">Loại</label>
+      <select id="type" name="type">
+          <option value="Nhà" >Nhà</option>
+          <option value="Căn hộ" >Căn hộ</option>
+          <option value="Phòng" >Phòng</option>
+      </select>
+      <label for="description">Loại tin:</label>
+      <select id="type_post" name="type_post">
+        <option value="VIP" >Vip(50000 vnd)</option>
+        <option value="MEDIUM" >Medium(30000 vnd)</option>
+        <option value="NORMAL" >Normal(15000 vnd)</option>
+    </select>
+    <script>
+        function confirmPost() {
+          var result = confirm("Bạn đã chắc chắn chưa?");
+          if (result) {
+            // Nếu người dùng ấn Yes thì submit form
+            document.getElementById("myForm").submit();
+          }
+        }
+      </script>
+      
+      <input type="submit" value="Đăng tin" onclick="confirmPost()">
+
+    </form>
+  </body>
+  <footer>
+    <p>Thuê nhà,phòng,căn hộ TaT - Tìm kiếm phòng trọ căn hộ và nhà cho thuê</p>
+</footer>
+
+</html>

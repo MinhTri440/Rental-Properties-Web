@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Statistical Bill</title>
+    <style>
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        th, td {
+          text-align: left;
+          padding: 8px;
+        }
+        th {
+          background-color: #4CAF50;
+          color: white;
+        }
+        tr:nth-child(even) {
+          background-color: #f2f2f2;
+        }
+        input[type=number] {
+          width: 50px;
+        }
+      </style>
+</head>
+<body>
+	<h1>Statistical Bill</h1>
+    <li><a href="/incomeManager" >Yêu cầu nạp tiền vào hệ thống</a></li>
+    <br>
+	<form action='/statistic_bill' method="GET">
+		<label for="date">Ngày:</label>
+		<input type="date" name="date">
+		<label for="month">Tháng:</label>
+		<input type="month" name="month">
+		<label for="year">Năm:</label>
+		<input type="number" name="year" min="1900" max="2099">
+		<button type="submit">Search</button>
+	</form>
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>UserName</th>
+				<th>Nạp vào</th>
+				<th>Loại thanh toán</th>
+				<th>Thời gian</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for bill in list_bill %}
+			<tr>
+				<td>{{ bill.Id }}</td>
+				<td>{{ bill.UserName }}</td>
+				<td>{{ bill.price }}</td>
+				<td>{{ bill.type }}</td>
+				<td>{{ bill.TimeCreate }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</body>
+</html>

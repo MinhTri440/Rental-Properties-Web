@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Trang chủ</title>
+	<style>
+		/* CSS để thiết lập giao diện trang web */
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: Arial, sans-serif;
+		}
+		header {
+			background-color: #333;
+			color: #fff;
+			padding: 10px;
+			text-align: center;
+		}
+		nav {
+			background-color: #ccc;
+			padding: 10px;
+			text-align: center;
+		}
+		nav a {
+			display: inline-block;
+			padding: 5px 10px;
+			color: #333;
+			text-decoration: none;
+			margin-right: 10px;
+		}
+		nav a:hover {
+			background-color: #333;
+			color: #fff;
+		}
+		section {
+			padding: 20px;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: flex-start;
+		}
+		section .card {
+			width: 300px;
+			margin: 10px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			padding: 10px;
+			text-align: center;
+		}
+		section .card img {
+			max-width: 100%;
+			height: auto;
+		}
+		section .card h2 {
+			margin-top: 0;
+			font-size: 24px;
+			color: #333;
+		}
+		section .card p {
+			margin-bottom: 0;
+			font-size: 16px;
+			color: #666;
+		}
+		footer {
+			background-color: #333;
+			color: #fff;
+			padding: 10px;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Thuê nhà,phòng,căn hộ TaT</h1>
+		<p>Tìm kiếm phòng trọ, căn hộ và nhà cho thuê</p>
+	</header>
+	<nav>
+		<a href="/">Trang chủ</a>
+		<a href="/Search">Tìm kiếm</a>
+		<a href="/post">Đăng tin cho thuê</a>
+		<a href="/listpost">Bài đăng</a>
+		<a href="/favorite">Yêu thích</a>
+        {% if username %}
+        <a href="/account">Xin chào ! {{username}} TKC:{{money}} vnd</a>
+		<a href="/recharge">Nạp tiền</a>
+        <a href="/logout">Đăng xuất</a>
+		<a href="/showpayment">Lịch sử nạp tiền</a>
+        <a href="/showtransaction">Lịch sử giao dịch</a>
+        {%else %}
+        <a href="/login">Đăng nhập</a>
+        {% endif %}
+        
+	</nav>
+	<section>
+        {% for list in lists %}
+		<div class="card">
+			{% if list.Type_Post=='VIP' %}
+			<a style="text-decoration: none;" href="/detail/{{list.Id}}"><img src="{{ url_for('static', filename= list.image1 ) }}" alt="My Image"></a>
+			<a style="text-decoration: none;" href="/detail/{{list.Id}}"><h2 style="color:red">{{list.title}}</h2></a>
+			<p style="color:red">Địa chỉ: {{list.address}}</p>
+			<p style="color:red">Giá thuê: {{list.price}} vnđ/tháng</p>
+			{% elif list.Type_Post=='MEDIUM' %}
+			<a style="text-decoration: none;" href="/detail/{{list.Id}}"><img src="{{ url_for('static', filename= list.image1 ) }}" alt="My Image"></a>
+			<a style="text-decoration: none;" href="/detail/{{list.Id}}"><h2 style="color:blue">{{list.title}}</h2></a>
+			<p style="color:blue">Địa chỉ: {{list.address}}</p>
+			<p style="color:blue">Giá thuê: {{list.price}} vnđ/tháng</p>
+
+
+			{%else %}
+			<a style="text-decoration: none;" href="/detail/{{list.Id}}"><img src="{{ url_for('static', filename= list.image1 ) }}" alt="My Image"></a>
+			<a style="text-decoration: none;" href="/detail/{{list.Id}}"><h2>{{list.title}}</h2></a>
+			<p>Địa chỉ: {{list.address}}</p>
+			<p>Giá thuê: {{list.price}} vnđ/tháng</p>
+			{% endif %}
+		</div>
+        {% endfor %}
+        </section>
+        <footer>
+            <p>Thuê nhà,phòng,căn hộ TaT - Tìm kiếm phòng trọ căn hộ và nhà cho thuê</p>
+        </footer>
+        

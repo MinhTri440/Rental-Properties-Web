@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Xem chi tiết bài đăng</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-45ZRl6wDdLno1eKj9Xv+p8h6iDGM/lbRupYV4Z4BL8CpVN1n3qkz7V9QvS8a7n0/3qHtfgJxb2Z+8Pu0/EP01g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<style>
+    header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+    }
+    nav {
+        background-color: #ccc;
+        padding: 10px;
+        text-align: center;
+    }
+    nav a {
+        display: inline-block;
+        padding: 5px 10px;
+        color: #333;
+        text-decoration: none;
+        margin-right: 10px;
+    }
+    nav a:hover {
+        background-color: #333;
+        color: #fff;
+    }
+    .grid-container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .post {
+        flex: 0 0 70%;
+      }
+      
+      .post2 {
+        flex: 0 0 30%;
+      }
+    .post2{
+        background-color: #87cefa;
+
+        text-align: center;
+    }
+    footer {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+    }
+    img {
+        width: 1050px;
+        height: 550px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      
+      input[type="submit"],
+      textarea {
+        display: block;
+        margin-bottom: 10px;
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      
+      /* Quy tắc cho danh sách đánh giá */
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      
+      li {
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      .call-btn {
+        padding: 12px 35px;
+        background-color: #008000;
+        border-radius: 10px;
+        color: white;
+        font-size: 1.2em;
+      }
+      .favorite {
+        padding: 12px 35px;
+        border-radius: 10px;
+        font-size: 1.2em;
+      }
+      .button1 {
+        display: inline-block;
+        border-radius: 3px;
+        padding: 0.5em 1em;
+        text-decoration: none;
+        background-color: #4285F4;
+        color: white;
+        text-align: center;
+        width:100%
+      }
+      
+      
+      
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+<script>
+    $(document).ready(function(){
+      $('.bxslider').bxSlider({
+        mode: 'fade',
+        captions: true,
+        auto: true,
+        speed: 500,
+        
+      });
+    });
+    function callNumber(number) {
+        window.location.href = 'tel:' + number;
+      }
+      
+  </script>
+<body>
+    <header>
+		<h1>Thuê nhà,phòng,căn hộ TaT</h1>
+		<p>Tìm kiếm phòng trọ, căn hộ và nhà cho thuê</p>
+	</header>
+	<nav>
+		<a href="/">Trang chủ</a>
+		<a href="/Search">Tìm kiếm</a>
+		<a href="/post">Đăng tin cho thuê</a>
+    <a href="/listpost">Bài đăng</a>
+    <a href="/favorite">Yêu thích</a>
+        {% if username %}
+        <a href="/account">Xin chào ! {{username}} TKC:{{money}} vnd</a>
+		<a href="/recharge">Nạp tiền</a>
+        <a href="/logout">Đăng xuất</a>
+        <a href="/showpayment">Lịch sử nạp tiền</a>
+        <a href="/showtransaction">Lịch sử giao dịch</a>
+        {%else %}
+        <a href="/login">Đăng nhập</a>
+        {% endif %}
+        
+	</nav>
+	<main class="grid-container">
+        <div class="post">
+            <ul class="bxslider">
+              <li><img src="{{ url_for('static', filename= rental_property.image1 ) }}" alt="My Image"></li>
+              <li><img src="{{ url_for('static', filename= rental_property.image2 ) }}" alt="My Image"></li>
+              <li><img src="{{ url_for('static', filename= rental_property.image3 ) }}" alt="My Image"></li>
+            </ul>
+            <h1>{{rental_property.title}}</h1>
+            <p>Địa chỉ: {{rental_property.address}}</p>
+            <p>Giá thuê: {{rental_property.price}}</p>
+            <p>Diện tích: {{rental_property.area}}<sup>2</sup></p>
+            <p>Mô tả: {{rental_property.description}}</p>
+            <p></p>
+            <label for="rating">Đánh giá:</label>
+            <form method="POST" action="/Review">
+            <select name="rating" id="rating">
+                <option value="1">1 sao</option>
+                <option value="2">2 sao</option>
+                <option value="3">3 sao</option>
+                <option value="4">4 sao</option>
+                <option value="5">5 sao</option>
+            </select>
+            <br>
+            <label for="comment">Nhận xét:</label>
+            <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+            <br>
+            <input type="hidden" name="id_rental" value={{rental_property.Id}}>
+            {% if username %}
+            <input class="button1" type="submit" value="Đăng đánh giá">
+            </form>
+            {% else %}
+            <a  class="button1" href="/login">Đánh giá<a>
+            {% endif %}
+            </form>
+
+            <h2>Đánh giá</h2>
+    {% if reviews %}
+        <ul>
+            {% for review in reviews %}
+                <li>Người dùng:{{review.NameShow}} <br>
+                  Đánh giá:{{ review.star }} sao <br>
+                  Bình luận:{{review.comment}}<br>
+                    Ngày đăng:{{review.TimeCreate}}<br>      
+                </li>              
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Chưa có đánh giá nào</p>
+    {% endif %}
+          </div>
+          <div class="post2">
+            <h1>Thông tin liên lạc </h1>
+            <div style="background-color:#FFA500">
+            <div><a href="tel:{{rental_property.number}}"><button class="call-btn">{{rental_property.number}}</button></a></div>
+            {% if rental_property.number_zalo %}
+            <div style="background-color:#FFA500"><a href="https://zalo.me/{{rental_property.number_zalo}}"><button class="call-btn" style="background-color:#2196F3">Nhắn tin zalo</button></a></div>
+            {% endif %}
+            {% if rental_property.link_facebook %}
+            <div style="background-color:#FFA500"><a href="{{rental_property.link_facebook}}"><button class="call-btn" style="background-color:#FF69B4">Nhắn tin Messenger</button></a></div>
+            {% if rental_property.linkmap %}
+            <div style="background-color:#FFA500"><a href="{{rental_property.linkmap}}"><button class="call-btn" style="background-color:#2196F3">Google Map</button></a></div>
+            {% endif %}
+            {% endif %}
+            {% if username %}
+                {% if checkfavourite=='yes' %}
+                <a href="/UpdateFavourite/{{rental_property.Id}}"><button style="background-color:Red" class="favorite">Đã Yêu thích</button></a>
+                {% endif %}
+                {% if checkfavourite=='no' %}
+                <a href="/UpdateFavourite/{{rental_property.Id}}"><button class="favorite">Yêu thích</button></a>
+                {% endif %}
+            {% else %}
+            <button style="background-color:White" class="call-btn"><a style="color:black;text-decoration:none;"  href="/login">Yêu Thích</a></button>
+            {% endif %}
+        </div>
+
+          </div>
+	</main>
+    <footer>
+        <p>Thuê nhà,phòng,căn hộ TaT - Tìm kiếm phòng trọ căn hộ và nhà cho thuê</p>
+    </footer>
+</body>
+</html>

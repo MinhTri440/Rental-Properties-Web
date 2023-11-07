@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>RentalManager</title>
+    <style>
+      /* Thiết lập kiểu cho thẻ ul và li */
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+      }
+
+      li {
+        float: left;
+      }
+
+      li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+
+      /* Thiết lập kiểu cho thẻ div */
+      .list-container {
+        display: none;
+        padding-top: 20px;
+      }
+
+      .active {
+        display: block;
+      }
+
+      /* Thiết lập kiểu cho thẻ table */
+      table {
+        font-family: Arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td, th {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      tr:hover {
+        background-color: #ddd;
+      }
+
+      th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #333;
+        color: white;
+      }
+    </style>
+
+    <script>
+      function openList(listName) {
+        var i;
+        var x = document.getElementsByClassName("list-container");
+        var tabs = document.getElementsByClassName("tab");
+
+        for (i = 0; i < x.length; i++) {
+          x[i].style.display = "none";
+        }
+
+        for (i = 0; i < tabs.length; i++) {
+          tabs[i].className = tabs[i].className.replace(" active", "");
+        }
+
+        document.getElementById(listName).style.display = "block";
+        event.currentTarget.className += " active";
+      }
+    </script>
+  </head>
+
+  <body>
+    <ul>
+      <li><a href="#" class="tab active" onclick="openList('post')">Yêu cầu đăng tin</a></li>
+      <li><a href="#" class="tab" onclick="openList('upgrade')">Yêu cầu nâng cấp</a></li>
+    </ul>
+
+    <div id="post" class="list-container active">
+
+      <table>
+        <thead>
+          <tr>
+            <th>Id </th>
+            <th>UserName</th>
+            <th>Id_Rental</th>
+            <th>Giá</th>
+            <th>Trạng thái</th>
+            <th>Thời gian<th>
+            <th>Xác nhận</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for tran in transactions %}
+          {%if tran.type=="Đăng bài" and tran.status=="Đang xử lí"%}
+          <tr>
+            <td>{{ tran[0] }}</td>
+            <td>{{ tran[1] }}</td>
+            <td>{{ tran[2] }}</td>
+            <td>{{ tran[4] }}</td>
+            <td>{{ tran[5] }}</td>
+            <td>{{ tran[6] }}</td>
+            <td>
+                <a style="text-decoration: none;" href="http://127.0.0.1:5000/detail/{{tran[2]}}"><p style="color:blue">Chi tiết</p2></a>
+            </td>
+            <td>
+                <form action="/YesPost" method="post">
+                <input type="hidden" name="rental_id" value="{{tran[2] }}">
+                <button type="submit">Yes</button>
+                </form>
+                <form action="/NoPost" method="post">
+                    <input type="hidden" name="id_rental" value="{{ tran[2] }}">
+                    <input type="hidden" name="price" value="{{ tran[4] }}">
+                    <input type="hidden" name="name" value="{{ tran[1] }}">
+                    <button type="submit">No</button>
+                    </form>
+
+          </td>
+          {%endif%}
+          {% endfor %}
+          <tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="upgrade" class="list-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Id </th>
+        <th>UserName</th>
+        <th>Id_Rental</th>
+        <th>Giá</th>
+        <th>Trạng thái</th>
+        <th>Thời gian<th>
+        <th>Xác nhận</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for tran in transactions %}
+      {%if tran[3]=="Nâng cấp bài" and tran.status=="Đang xử lí"%}
+      <tr>
+        <td>{{ tran[0] }}</td>
+        <td>{{ tran[1] }}</td>
+        <td>{{ tran[2] }}</td>
+        {%if tran[4]=="35000"%}
+        <td>{{ tran[4] }} (Từ Normal lên Vip)</td>
+        {%elif tran[4]=="20000"%}
+        <td>{{ tran[4] }} (Từ Medium lên Vip)</td>
+        {%else%}
+        <td>{{ tran[4] }} (Từ Normal lên Medium)</td>
+        {%endif%}
+        <td>{{ tran[5] }}</td>
+        <td>{{ tran[6] }}</td>
+        <td>
+            <a style="text-decoration: none;" href="http://127.0.0.1:5000/detail/{{tran[2]}}"><p style="color:blue">Chi tiết</p2></a>
+        </td>
+        <td>
+            <form action="/YesUpgrade" method="post">
+            <input type="hidden" name="rental_id" value="{{ tran[2] }}">
+            {%if tran[4]==35000 %}
+            <input type="hidden" name="type_post" value="VIP">
+            {%elif tran[4]==20000 %}
+            <input type="hidden" name="type_post" value="VIP">
+            {%else%}
+            <input type="hidden" name="type_post" value="MEDIUM">
+            {%endif%}
+            <button type="submit">Yes</button>
+            </form>
+            <form action="/NoUpgrade" method="post">
+                <input type="hidden" name="name" value="{{ tran[1] }}">
+                <input type="hidden" name="id_rental" value="{{ tran[2] }}">
+                <input type="hidden" name="price" value="{{ tran[4] }}">
+                <button type="submit">No</button>
+                </form>
+
+      </td>
+      {%endif%}
+      {% endfor %}
+      <tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
+

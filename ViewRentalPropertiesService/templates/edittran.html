@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Cập nhật tin đăng</title>
+        <style>
+            /* CSS để thiết lập giao diện trang web */
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+            }
+            header {
+                background-color: #333;
+                color: #fff;
+                padding: 10px;
+                text-align: center;
+            }
+            nav {
+                background-color: #ccc;
+                padding: 10px;
+                text-align: center;
+            }
+            nav a {
+                display: inline-block;
+                padding: 5px 10px;
+                color: #333;
+                text-decoration: none;
+                margin-right: 10px;
+            }
+            nav a:hover {
+                background-color: #333;
+                color: #fff;
+            }
+            section {
+                padding: 20px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: flex-start;
+            }
+            section .card {
+                width: 300px;
+                margin: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                padding: 10px;
+                text-align: center;
+            }
+            section .card img {
+                max-width: 100%;
+                height: auto;
+            }
+            section .card h2 {
+                margin-top: 0;
+                font-size: 24px;
+                color: #333;
+            }
+            section .card p {
+                margin-bottom: 0;
+                font-size: 16px;
+                color: #666;
+            }
+            footer {
+                background-color: #333;
+                color: #fff;
+                padding: 10px;
+                text-align: center;
+            }
+            form {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              }
+          
+              label {
+                font-weight: bold;
+                margin-top: 20px;
+              }
+          
+              input[type="text"],
+              select,
+              textarea {
+                font-size: 20px;
+                padding: 10px;
+                margin-top: 10px;
+                border-radius: 5px;
+                border: 1px solid gray;
+                width: 90%;
+              }
+          
+              input[type="file"] {
+                margin-top: 10px;
+              }
+          
+              input[type="submit"] {
+                background-color: #4CAF50;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+              }
+          
+              input[type="submit"]:hover {
+                background-color: #45a049;
+              }
+        </style>
+
+    </head>
+	<header>
+		<h1>Thuê nhà,phòng,căn hộ TaT</h1>
+		<p>Tìm kiếm phòng trọ, căn hộ và nhà cho thuê</p>
+	</header>
+	<nav>
+		<a href="/">Trang chủ</a>
+		<a href="/Search">Tìm kiếm</a>
+		<a href="/post">Đăng tin cho thuê</a>
+    <a href="/listpost">Bài đăng</a>
+    <a href="/favorite">Yêu thích</a>
+        {% if username %}
+        <a href="/account">Xin chào ! {{username}} TKC:{{money}} vnd</a>
+		<a href="/recharge">Nạp tiền</a>
+        <a href="/logout">Đăng xuất</a>
+        <a href="/showpayment">Lịch sử nạp tiền</a>
+        <a href="/showtransaction">Lịch sử giao dịch</a>
+        {%else %}
+        <a href="/login">Đăng nhập</a>
+        {% endif %}
+        
+	</nav>
+  <body>
+    <h1>Chỉnh sửa bài đăng</h1>
+    {% if message %}
+    <h2>{{message}}</2>
+    {%endif%}
+    <form id="myForm" method="post" enctype="multipart/form-data">
+      <label for="title">Tiêu đề:{{rental_property.title}}</label>
+      <input type="hidden" id="location" name="title" value="{{rental_property.title}}"required><br>
+      <label for="location">Mô tả:</label>
+      <input type="text" id="location" name="description" value="{{rental_property.description}}"required><br>
+      <label for="location">Địa chỉ:{{rental_property.address}}</label>
+      <label for="location">Quận:{{rental_property.district}}</label>
+      <label for="image">Ảnh 1:</label>
+      <img src="{{ url_for('static', filename= rental_property.image1 ) }}" alt="My Image">
+      <label for="location">Đổi ảnh 1</label>
+      <input type="file" id="image" name="image1" ><br>
+      <label for="image">Ảnh 2:</label>
+      <img src="{{ url_for('static', filename= rental_property.image2 ) }}" alt="My Image">
+      <label for="location">Đổi ảnh 2</label>
+      <input type="file" id="image" name="image2" ><br>
+      <img src="{{ url_for('static', filename= rental_property.image3 ) }}" alt="My Image">
+      <label for="location">Đổi ảnh 3</label>
+      <label for="image">Ảnh3:</label>
+      <input type="file" id="image" name="image3"><br>
+      <label for="price">Giá tiền:</label>
+      <input type="number" id="price" value="{{rental_property.price}}" name="price" required><br>
+      <label for="price">Loai:{{rental_property.type}}</label>
+      <label for="price">Link google map (nếu có):</label>
+      <input type="text" id="price" value="{{rental_property.linkmap}}" name="map" ><br>
+      <label for="price">Số zalo (nếu có):</label>
+      <input type="text" value="{{rental_property.number_zalo}}" id="price" name="zalo" ><br>
+      <label for="price">Link facebook nếu có (nếu có):</label>
+      <input value="{{rental_property.link_facebook}}" type="text" id="price" name="facebook"><br>
+      <label for="description">Loại tin:</label>
+      <input type="text" value="{{rental_property.Type_Post}}" id="price" name="post_rental" required><br>
+      
+      <input type="submit" value="Cập nhật">
+
+    </form>
+  </body>
+  <footer>
+    <p>Thuê nhà,phòng,căn hộ TaT - Tìm kiếm phòng trọ căn hộ và nhà cho thuê</p>
+</footer>
+
+</html>

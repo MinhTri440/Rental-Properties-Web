@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tìm kiếm</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+    header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+    }
+    nav {
+        background-color: #ccc;
+        padding: 10px;
+        text-align: center;
+    }
+    nav a {
+        display: inline-block;
+        padding: 5px 10px;
+        color: #333;
+        text-decoration: none;
+        margin-right: 10px;
+    }
+    nav a:hover {
+        background-color: #333;
+        color: #fff;
+    }
+    section {
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-start;
+    }
+    section .card {
+        width: 300px;
+        margin: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        text-align: center;
+    }
+    section .card img {
+        max-width: 100%;
+        height: auto;
+    }
+    section .card h2 {
+        margin-top: 0;
+        font-size: 24px;
+        color: #333;
+    }
+    section .card p {
+        margin-bottom: 0;
+        font-size: 16px;
+        color: #666;
+    }
+    footer {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+    }
+</style>
+<body>
+	<header>
+		<h1>Tìm kiếm</h1>
+	</header>
+    <nav>
+		<a href="/">Trang chủ</a>
+		<a href="/Search">Tìm kiếm</a>
+		<a href="/post">Đăng tin cho thuê</a>
+        <a href="/listpost">Bài đăng</a>
+        <a href="/favorite">Yêu thích</a>
+        {% if username %}
+        <a href="/account">Xin chào ! {{username}} TKC:{{money}} vnd</a>
+		<a href="/recharge">Nạp tiền</a>
+        <a href="/logout">Đăng xuất</a>
+        <a href="/showpayment">Lịch sử nạp tiền</a>
+        <a href="/showtransaction">Lịch sử giao dịch</a>
+        {%else %}
+        <a href="/login">Đăng nhập</a>
+        {% endif %}
+        
+	</nav>
+	<main>
+		<form action="/Search" method="post">
+			<label for="type">Loại</label>
+            <select id="type" name="type">
+                <option value="0" >All</option>
+				<option value="Nhà" >Nhà</option>
+                <option value="Căn hộ" >Căn hộ</option>
+                <option value="Phòng" >Phòng</option>
+			</select>
+            <label for="location">Quận</label>
+            <select id="location" name="location">
+                <option value="0" >All</option>
+				<option value="1" >QUận 1</option>
+                <option value="3" >QUận 3</option>
+                <option value="4" >QUận 4</option>
+                <option value="5" >QUận 5</option>
+                <option value="6" >QUận 6</option>
+                <option value="7" >QUận 7</option>
+                <option value="8" >QUận 8</option>
+                <option value="10" >QUận 10</option>
+                <option value="11" >QUận 11</option>
+                <option value="12" >QUận 12</option>
+                <option value="Bình Tân" >QUận Bình Tân</option>
+                <option value="Bình Thạnh" >QUận Bình Thạnh</option>
+                <option value="Gò Vấp" >QUận Gò Vấp</option>
+                <option value="Phú Nhuận" >QUận Phú Nhuận</option>
+                <option value="Tân Bình" >QUận Tân Bình</option>
+                <option value="Tân Phú" >QUận Tân Phú</option>
+                <option value="Thủ Đức" >QUận Thủ Đức</option>
+			</select>
+
+			<label for="price">Giá:</label>
+			<select id="price" name="price">
+                <option value=0>Tất cả</option>
+				<option value=1>Dưới 5 triệu</option>
+				<option value=2>Từ 5-10 triệu</option>
+				<option value=3>Từ 10-20 triệu</option>
+				<option value=4>Trên 20 triệu</option>
+			</select>
+
+			<label for="area">Diện tích:</label>
+            <select id="area" name="area">
+                <option value=0>All</option>
+				<option value=1>20-30</option>
+				<option value=2>30-40</option>
+				<option value=3>40-60</option>
+				<option value=4>60-80</option>
+                <option value=5>Trên 80</option>
+			</select>
+
+			<input type="submit" value="Tìm kiếm">
+		</form>
+        <section>
+            {%if rental_properties%}
+            {% for list in rental_properties %}
+            <div class="card">
+                {% if list.Type_Post=='VIP' %}
+                <a style="text-decoration: none;" href="/detail/{{list.Id}}"><img src="{{ url_for('static', filename= list.image1 ) }}" alt="My Image"></a>
+                <a style="text-decoration: none;" href="/detail/{{list.Id}}"><h2 style="color:red">{{list.title}}</h2></a>
+                <p style="color:red">Địa chỉ: {{list.address}}</p>
+                <p style="color:red">Giá thuê: {{list.price}} vnđ/tháng</p>
+                {% elif list.Type_Post=='MEDIUM' %}
+                <a style="text-decoration: none;" href="/detail/{{list.Id}}"><img src="{{ url_for('static', filename= list.image1 ) }}" alt="My Image"></a>
+                <a style="text-decoration: none;" href="/detail/{{list.Id}}"><h2 style="color:blue">{{list.title}}</h2></a>
+                <p style="color:blue">Địa chỉ: {{list.address}}</p>
+                <p style="color:blue">Giá thuê: {{list.price}} vnđ/tháng</p>
+    
+                {%else %}
+                <a style="text-decoration: none;" href="/detail/{{list.Id}}"><img src="{{ url_for('static', filename= list.image1 ) }}" alt="My Image"></a>
+                <a style="text-decoration: none;" href="/detail/{{list.Id}}"><h2>{{list.title}}</h2></a>
+                <p>Địa chỉ: {{list.address}}</p>
+                <p>Giá thuê: {{list.price}} vnđ/tháng</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {%else%}
+            <h1>Không có kết quả</h1>
+            {%endif%}
+            </section>
+	</main>
+	<footer>
+		<p>Thuê nhà,phòng,căn hộ TaT</p>
+	</footer>
+</body>
+</html>

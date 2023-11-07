@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>IncomeManager</title>
+    <style>
+      /* Thiết lập kiểu cho thẻ ul và li */
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+      }
+
+      li {
+        float: left;
+      }
+
+      li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+
+      /* Thiết lập kiểu cho thẻ div */
+      .list-container {
+        display: none;
+        padding-top: 20px;
+      }
+
+      .active {
+        display: block;
+      }
+
+      /* Thiết lập kiểu cho thẻ table */
+      table {
+        font-family: Arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td, th {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      tr:hover {
+        background-color: #ddd;
+      }
+
+      th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #333;
+        color: white;
+      }
+    </style>
+
+    <script>
+      function openList(listName) {
+        var i;
+        var x = document.getElementsByClassName("list-container");
+        var tabs = document.getElementsByClassName("tab");
+
+        for (i = 0; i < x.length; i++) {
+          x[i].style.display = "none";
+        }
+
+        for (i = 0; i < tabs.length; i++) {
+          tabs[i].className = tabs[i].className.replace(" active", "");
+        }
+
+        document.getElementById(listName).style.display = "block";
+        event.currentTarget.className += " active";
+      }
+    </script>
+  </head>
+
+  <body>
+    <ul>
+      <li><a href="/incomeManager" >Yêu cầu nạp tiền vào hệ thống</a></li>
+      <li><a href="/statistic_bill" >Thống kê</a></li>
+    </ul>
+
+<div id="post" class="list-container active">
+
+    <table>
+        <thead>
+          <tr>
+            <th>UserName </th>
+            <th>Nạp vào </th>
+            <th>Phương thức<th>
+            <th></th>
+            <th>Trạng thái<th>
+            <th>Thời gian<th>
+            <th>Xác nhận<th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for tran in transactions %}
+          {%if tran.status=="Đang xử lí"%}
+          <tr>
+            <td>{{ tran[1] }}</td>
+            <td>{{ tran[2] }}</td>
+            <td>{{ tran[3] }}</td>
+            <td><td>
+            <td>{{ tran[4] }}<td>
+            <td>{{ tran[5] }}<td>
+                <td>
+                    <form action="/YesNap" method="post">
+                    <input type="hidden" name="id_pay" value="{{tran[0]}}">
+                    <input type="hidden" name="name" value="{{tran[1]}}">
+                    <input type="hidden" name="price" value="{{tran[2]}}">
+                    <button type="submit">Yes</button>
+                    </form>
+                    <form action="/NoNap" method="post">
+                        <input type="hidden" name="name" value="{{ tran[1] }}">
+                        <input type="hidden" name="id_pay" value="{{ tran[0] }}">
+                        <input type="hidden" name="price" value="{{ tran[4] }}">
+                        <button type="submit">No</button>
+                        </form>
+        
+              </td>
+          {%endif%}
+          {% endfor %}
+          <tr>
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+</html>
+

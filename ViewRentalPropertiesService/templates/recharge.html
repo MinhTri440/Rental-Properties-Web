@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Nạp tiền</title>
+        <style>
+            /* CSS để thiết lập giao diện trang web */
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+            }
+            header {
+                background-color: #333;
+                color: #fff;
+                padding: 10px;
+                text-align: center;
+            }
+            nav {
+                background-color: #ccc;
+                padding: 10px;
+                text-align: center;
+            }
+            nav a {
+                display: inline-block;
+                padding: 5px 10px;
+                color: #333;
+                text-decoration: none;
+                margin-right: 10px;
+            }
+            nav a:hover {
+                background-color: #333;
+                color: #fff;
+            }
+            section {
+                padding: 20px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: flex-start;
+            }
+            section .card {
+                width: 300px;
+                margin: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                padding: 10px;
+                text-align: center;
+            }
+            section .card img {
+                max-width: 100%;
+                height: auto;
+            }
+            section .card h2 {
+                margin-top: 0;
+                font-size: 24px;
+                color: #333;
+            }
+            section .card p {
+                margin-bottom: 0;
+                font-size: 16px;
+                color: #666;
+            }
+            footer {
+                background-color: #333;
+                color: #fff;
+                padding: 10px;
+                text-align: center;
+            }
+            form {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              }
+          
+              label {
+                font-weight: bold;
+                margin-top: 20px;
+              }
+          
+              input[type="text"],
+              select,
+              textarea {
+                font-size: 20px;
+                padding: 10px;
+                margin-top: 10px;
+                border-radius: 5px;
+                border: 1px solid gray;
+                width: 90%;
+              }
+          
+              input[type="file"] {
+                margin-top: 10px;
+              }
+          
+              input[type="submit"] {
+                background-color: #4CAF50;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+              }
+          
+              input[type="submit"]:hover {
+                background-color: #45a049;
+              }
+        </style>
+    </head>
+	<header>
+		<h1>Thuê nhà,phòng,căn hộ TaT</h1>
+		<p>Tìm kiếm phòng trọ, căn hộ và nhà cho thuê</p>
+	</header>
+	<nav>
+		<a href="/">Trang chủ</a>
+		<a href="/Search">Tìm kiếm</a>
+		<a href="/post">Đăng tin cho thuê</a>
+    <a href="/listpost">Bài đăng</a>
+    <a href="/favorite">Yêu thích</a>
+        {% if username %}
+        <a href="/account">Xin chào ! {{username}} TKC:{{money}} vnd</a>
+		<a href="/recharge">Nạp tiền</a>
+        <a href="/logout">Đăng xuất</a>
+        <a href="/showpayment">Lịch sử nạp tiền</a>
+        <a href="/showtransaction">Lịch sử giao dịch</a>
+        {%else %}
+        <a href="/login">Đăng nhập</a>
+        {% endif %}
+        
+	</nav>
+  <body>
+    <h1>Nạp tiền</h1>
+    {% if message %}
+    <h2>{{message}}</2>
+    {%endif%}
+    <form id="myForm" method="post" enctype="multipart/form-data">
+      <label  for="title">Nhập số tiền bạn muốn nạp:</label>
+      <input placeholder="Tối thiểu 15000" type="number" id="title" name="count" min="15000"required><br>
+
+      <label for="description">Phương thức thanh toán:</label>
+      <select id="type_post" name="payment">
+        <option value="Thẻ" > QR ngân hàng</option>
+        <option value="Momo" >Momo QR</option>
+    </select>
+      
+      <input type="submit" value="Nạp tiền" onclick="confirmPost()">
+
+    </form>
+  </body>
+  <footer>
+    <p>Thuê nhà,phòng,căn hộ TaT - Tìm kiếm phòng trọ căn hộ và nhà cho thuê</p>
+</footer>
+
+</html>
